@@ -1,26 +1,7 @@
 "use client"
 import { useEffect, useState } from 'react'
 
-export default function GenInfo() {
-    const [battery, setBattery] = useState(30);
-    const [compass, setCompass] = useState(330)
-    const [temprature, setTemprature] = useState(20);
-    const [cog, setCog] = useState(20);
-    const [coordinate, setCoordinate] = useState("[S 3.56734 E 104.67235]")
-
-    const day = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
-
-
-    function xF(a: number) {
-        if (a < 10)
-            return "0" + a
-        else
-            return a
-    }
-
-    function getDate(a: Date) {
-        return xF(a.getDate()) + "/" + xF(a.getMonth()) + "/" + a.getFullYear();
-    }
+export default function GenInfo({ battery, compass, temprature }: { battery: number, compass: number, temprature: number }) {
 
     return (
         <div className='flex flex-col space-y-1'>

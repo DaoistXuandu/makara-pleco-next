@@ -1,7 +1,6 @@
 import { useState } from "react"
 
-export default function PositionLog() {
-    const [status, setStatus] = useState(2)
+export default function PositionLog({ status }: { status: number }) {
 
     const mission = [
         "Preparation",

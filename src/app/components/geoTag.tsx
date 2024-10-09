@@ -1,12 +1,9 @@
 "use client"
 import { useEffect, useState } from 'react'
 
-export default function GeoTag() {
+export default function GeoTag({ sog, cog, coordinate }: { sog: number, cog: number, coordinate: string }) {
     const [time, setTime] = useState("");
     const [date, setDate] = useState(new Date())
-    const [knot, setKnot] = useState(20);
-    const [cog, setCog] = useState(20);
-    const [coordinate, setCoordinate] = useState("[S 3.56734 E 104.67235]")
 
     const day = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
 
@@ -44,7 +41,7 @@ export default function GeoTag() {
                     </div>
                     <div className='flex flex-row space-x-2 text-md'>
                         <p className='font-medium'>SOG: </p>
-                        <p>{knot} knot / {knot * 1.852}km/jam</p>
+                        <p>{sog * 0.539957} knot / {sog}km/jam</p>
                     </div>
                     <div className='flex flex-row space-x-2 text-md'>
                         <p className='font-medium'>Date: </p>
