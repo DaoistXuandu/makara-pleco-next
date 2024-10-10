@@ -112,9 +112,10 @@ export default function Home() {
       console.log(data)
       setGcs(data)
     });
+
     await channel.subscribe('first', (message: any) => {
-      console.log(message)
-      // setTemp(message.data)
+      let image = message.data
+      setTemp(image)
     })
   }
 
@@ -122,6 +123,10 @@ export default function Home() {
   useEffect(() => {
     publishSubscribe()
   }, [])
+
+  useEffect(() => {
+    console.log("FFF", temp)
+  }, [temp])
 
 
 
