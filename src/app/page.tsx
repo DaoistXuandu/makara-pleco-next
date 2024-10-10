@@ -1,5 +1,5 @@
 "use client"
-import { Nosifer, Noto_Sans } from 'next/font/google'
+import { Cabin_Sketch, Nosifer, Noto_Sans } from 'next/font/google'
 import Title from './components/title'
 import GeoTag from './components/geoTag';
 import GenInfo from './components/genInfo';
@@ -9,6 +9,7 @@ import UnderwaterImaging from './components/underwaterImaging';
 import Position from './components/position';
 import { useEffect, useState } from 'react';
 import Video from './components/video';
+import { channel } from 'diagnostics_channel';
 const noto_sans = Noto_Sans({ subsets: ['latin'] })
 
 interface GCS {
@@ -36,6 +37,7 @@ interface GCS {
 export default function Home() {
   const [track, setTrack] = useState(0)
   const Ably = require('ably');
+  const [temp, setTemp] = useState("")
   const [gcs, setGcs] = useState<GCS>(
     {
       cog: 0,
@@ -110,7 +112,12 @@ export default function Home() {
       console.log(data)
       setGcs(data)
     });
+    await channel.subscribe('first', (message: any) => {
+      console.log(message)
+      // setTemp(message.data)
+    })
   }
+
 
   useEffect(() => {
     publishSubscribe()
@@ -142,7 +149,7 @@ export default function Home() {
       <div className='flex flex-row'>
         <div className='w-1/2'>
           <p>Front Camera</p>
-          <Video image={gcs.surfaceCamera} />
+          <Video image={temp} />
         </div>
         <div className='w-1/2'>
           <p>Underwater Camera</p>
