@@ -50,15 +50,15 @@ export default function Home() {
   function isGcs(data: any): data is GCS {
     return (
       typeof data === 'object' &&
-      typeof data.sog === 'number'
-      // typeof data.longitude === 'number' &&
-      // typeof data.lattitude === 'number' &&
-      // typeof data.battery === 'number' &&
-      // typeof data.temprature === 'number' &&
-      // typeof data.surface_image === 'string' &&
-      // typeof data.uderwater_image === 'string' &&
-      // typeof data.mission === 'number' &&
-      // typeof data.track === 'string'
+      typeof data.sog === 'number' &&
+      typeof data.longitude === 'number' &&
+      typeof data.lattitude === 'number' &&
+      typeof data.battery === 'number' &&
+      typeof data.temprature === 'number' &&
+      typeof data.surface_image === 'string' &&
+      typeof data.uderwater_image === 'string' &&
+      typeof data.mission === 'number' &&
+      typeof data.track === 'string'
     );
   }
 
@@ -66,23 +66,26 @@ export default function Home() {
     const data = await gcsGet()
     console.log(data)
     if (data && isGcs(data[0])) {
-      console.log(data[0])
       setGcs(data[0])
     }
   }
 
-  function handleClick() {
-    getGcs()
-  }
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      getGcs()
+    }, 1000); // Runs every 1 second
+
+    // Cleanup on component unmount
+    return () => clearInterval(intervalId);
+  }, [])
 
   return (
     <div className={`flex text-black flex-col space-y-5 p-12 bg-white h-screen min-h-fit ${noto_sans.className}`}>
       <Title />
-      <p>{temp ? temp : "Belum ada"}</p>
-      <button onClick={handleClick}>Tekan Ini</button>
+      {/* <button onClick={handleClick}>Tekan Ini</button> */}
       <div className='flex flex-row'>
         <div className='flex flex-col w-1/2 space-y-3'>
-          <GeoTag cog={gcs.cog} sog={gcs.cog} coordinate={gcs.longitude} />
+          <GeoTag cog={gcs.cog} sog={gcs.cog} lon={gcs.longitude} lat={gcs.lattitude} />
           <GenInfo battery={gcs.battery} temprature={gcs.temprature} />
           <PositionLog status={gcs.mission} />
         </div>

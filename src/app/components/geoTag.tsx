@@ -1,7 +1,7 @@
 "use client"
 import { useEffect, useState } from 'react'
 
-export default function GeoTag({ sog, cog, coordinate }: { sog: number, cog: number, coordinate: number }) {
+export default function GeoTag({ sog, cog, lon, lat }: { sog: number, cog: number, lon: number, lat: number }) {
     const [time, setTime] = useState("");
     const [date, setDate] = useState(new Date())
 
@@ -24,11 +24,6 @@ export default function GeoTag({ sog, cog, coordinate }: { sog: number, cog: num
     function getDate(a: Date) {
         return xF(a.getDate()) + "/" + xF(a.getMonth()) + "/" + a.getFullYear();
     }
-    useEffect(() => {
-        setInterval(() => {
-            getTime();
-        }, 1000)
-    }, [])
 
     return (
         <div className='flex flex-col space-y-1'>
@@ -59,7 +54,7 @@ export default function GeoTag({ sog, cog, coordinate }: { sog: number, cog: num
                     </div>
                     <div className='flex flex-row space-x-2 text-md'>
                         <p className='font-medium'>Coordinate: </p>
-                        <p>{coordinate}</p>
+                        <p>[{lat}, {lon}]</p>
                     </div>
                 </div>
             </div>
