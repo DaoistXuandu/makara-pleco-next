@@ -1,7 +1,7 @@
 "use client"
 import { useEffect, useState } from 'react'
 
-export default function GeoTag({ sog, cog, coordinate }: { sog: number, cog: number, coordinate: string }) {
+export default function GeoTag({ sog, cog, coordinate }: { sog: number, cog: number, coordinate: number }) {
     const [time, setTime] = useState("");
     const [date, setDate] = useState(new Date())
 
@@ -9,7 +9,7 @@ export default function GeoTag({ sog, cog, coordinate }: { sog: number, cog: num
 
     function getTime() {
         let date = new Date()
-        let format = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+        let format = xF(date.getHours()) + ":" + xF(date.getMinutes()) + ":" + xF(date.getSeconds());
         setTime(format)
     }
 

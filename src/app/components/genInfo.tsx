@@ -1,7 +1,7 @@
 "use client"
 import { useEffect, useState } from 'react'
 
-export default function GenInfo({ battery, compass, temprature }: { battery: number, compass: number, temprature: number }) {
+export default function GenInfo({ battery, temprature }: { battery: number, temprature: number }) {
 
     return (
         <div className='flex flex-col space-y-1'>
@@ -11,10 +11,6 @@ export default function GenInfo({ battery, compass, temprature }: { battery: num
                     <div className='flex flex-row space-x-2 text-md'>
                         <p className='font-medium'>Battery Status: </p>
                         <p>{battery}</p>
-                    </div>
-                    <div className='flex flex-row space-x-2 text-md'>
-                        <p className='font-medium'>Compass: </p>
-                        <p>{compass}<sup>O</sup> </p>
                     </div>
                 </div>
                 <div className='flex flex-col w-1/2'>

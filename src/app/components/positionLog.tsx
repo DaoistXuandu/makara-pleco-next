@@ -52,7 +52,7 @@ export default function PositionLog({ status }: { status: number }) {
                     <ul className="ml-2 flex flex-col space-y-1">
                         {
                             mission.map((item, index) => (
-                                <li className={`flex flex-row space-x-3`}>
+                                <li key={index} className={`flex flex-row space-x-3`}>
                                     <h1>{index + 1}. {item}</h1>
                                     <div className={`text-white p-1 text-sm rounded-xl pl-4 pr-4 ${getMissionColor(index)}`}>{getMissionStatus(index)}</div>
                                 </li>
