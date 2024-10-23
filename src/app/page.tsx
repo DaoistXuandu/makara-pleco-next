@@ -9,6 +9,7 @@ import UnderwaterImaging from './components/underwaterImaging';
 import Position from './components/position';
 import { useEffect, useState } from 'react';
 import { gcsGet } from '@/lib/data';
+import { getDefaultConfig } from 'tailwind-merge';
 const noto_sans = Noto_Sans({ subsets: ['latin'] })
 
 interface GCS {
@@ -64,8 +65,7 @@ export default function Home() {
 
   async function getGcs() {
     const data = await gcsGet()
-    console.log(data)
-    if (data && isGcs(data[0])) {
+    if (data) {
       setGcs(data[0])
     }
   }
@@ -82,10 +82,9 @@ export default function Home() {
   return (
     <div className={`flex text-black flex-col space-y-5 p-12 bg-white h-screen min-h-fit ${noto_sans.className}`}>
       <Title />
-      {/* <button onClick={handleClick}>Tekan Ini</button> */}
       <div className='flex flex-row'>
         <div className='flex flex-col w-1/2 space-y-3'>
-          <GeoTag cog={gcs.cog} sog={gcs.cog} lon={gcs.longitude} lat={gcs.lattitude} />
+          <GeoTag cog={gcs.cog} sog={gcs.sog} lon={gcs.longitude} lat={gcs.lattitude} />
           <GenInfo battery={gcs.battery} temprature={gcs.temprature} />
           <PositionLog status={gcs.mission} />
         </div>
@@ -98,7 +97,7 @@ export default function Home() {
               <UnderwaterImaging image={gcs.uderwater_image} />
             </div>
           </div>
-          <Position track={track} />
+          <Position track={track} lon={gcs.longitude} lat={gcs.lattitude} />
         </div>
       </div>
     </div >
