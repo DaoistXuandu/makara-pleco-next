@@ -75,7 +75,7 @@ export default function Home() {
   }, [])
 
   return (
-    <div className={`flex text-black flex-col space-y-5 p-12 bg-white h-screen min-h-fit ${noto_sans.className}`}>
+    <div className={`flex text-black flex-col space-y-5 pt-10 pb-20 px-12 bg-white h-screen min-h-fit ${noto_sans.className}`}>
       <Title />
       <div className='flex flex-row'>
         <div className='flex flex-col w-1/2 space-y-3'>

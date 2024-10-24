@@ -1,8 +1,14 @@
 export default function SurfaceImaging({ image }: { image: string }) {
-    return (
+  return (
+    <div>
+      <p className="font-bold text-xl">Mission Surface Imaging</p>
+      {image ? (
+        <img src={image} alt="" />
+      ) : (
         <div>
-            <p className="font-bold text-xl">Mission Surface Imaging</p>
-            <img src={image} alt="" />
+          <p>Belum mengambil gambar</p>
         </div>
-    )
+      )}
+    </div>
+  );
 }
