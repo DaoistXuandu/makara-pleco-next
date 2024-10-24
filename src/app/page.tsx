@@ -92,7 +92,7 @@ export default function Home() {
               <UnderwaterImaging image={gcs.uderwater_image} />
             </div>
           </div>
-          <Position track={track} lon={gcs.longitude} lat={gcs.latittude} initialX={initialX} initialY={initialY} initial={initial} />
+          <Position track={track} lon={gcs.longitude} lat={gcs.latittude} />
         </div>
       </div>
     </div >
