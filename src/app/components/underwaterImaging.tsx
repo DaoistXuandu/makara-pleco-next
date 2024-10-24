@@ -1,8 +1,14 @@
 export default function UnderwaterImaging({ image }: { image: string }) {
-    return (
+  return (
+    <div>
+      <p className="font-bold text-xl">Mission Underwater Imaging</p>
+      {image ? (
+        <img src={image} alt="" />
+      ) : (
         <div>
-            <p className="font-bold">Mission Underwater Imaging</p>
-            <img src={image} alt="" />
+          <p>Belum mengambil gambar</p>
         </div>
-    )
+      )}
+    </div>
+  );
 }
