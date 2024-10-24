@@ -10,6 +10,7 @@ import Position from './components/position';
 import { useEffect, useState } from 'react';
 import { gcsGet } from '@/lib/data';
 import { getDefaultConfig } from 'tailwind-merge';
+import { init } from 'next/dist/compiled/webpack/webpack';
 const noto_sans = Noto_Sans({ subsets: ['latin'] })
 
 interface GCS {
@@ -17,7 +18,7 @@ interface GCS {
   sog: number
 
   longitude: number
-  lattitude: number
+  latittude: number
 
   battery: number
   temprature: number
@@ -33,12 +34,15 @@ interface GCS {
 export default function Home() {
   const [track, setTrack] = useState(0)
   const [temp, setTemp] = useState("")
+  const [initialX, setInitialX] = useState(0)
+  const [initialY, setInitialY] = useState(0)
+  const [initial, setInitial] = useState(false)
   const [gcs, setGcs] = useState<GCS>(
     {
       cog: 0,
       sog: 0,
       longitude: 0,
-      lattitude: 0,
+      latittude: 0,
       battery: 55,
       temprature: 30,
       surface_image: "",
@@ -48,24 +52,15 @@ export default function Home() {
     }
   )
 
-  function isGcs(data: any): data is GCS {
-    return (
-      typeof data === 'object' &&
-      typeof data.sog === 'number' &&
-      typeof data.longitude === 'number' &&
-      typeof data.lattitude === 'number' &&
-      typeof data.battery === 'number' &&
-      typeof data.temprature === 'number' &&
-      typeof data.surface_image === 'string' &&
-      typeof data.uderwater_image === 'string' &&
-      typeof data.mission === 'number' &&
-      typeof data.track === 'string'
-    );
-  }
-
   async function getGcs() {
     const data = await gcsGet()
     if (data) {
+      if (!initial && data[0].latittude && data[0].longitude) {
+        setInitial(true)
+        setInitialX(data[0].longitude)
+        setInitialY(data[0].latittude)
+      }
+
       setGcs(data[0])
     }
   }
@@ -84,7 +79,7 @@ export default function Home() {
       <Title />
       <div className='flex flex-row'>
         <div className='flex flex-col w-1/2 space-y-3'>
-          <GeoTag cog={gcs.cog} sog={gcs.sog} lon={gcs.longitude} lat={gcs.lattitude} />
+          <GeoTag cog={gcs.cog} sog={gcs.sog} lon={gcs.longitude} lat={gcs.latittude} />
           <GenInfo battery={gcs.battery} temprature={gcs.temprature} />
           <PositionLog status={gcs.mission} />
         </div>
@@ -97,7 +92,7 @@ export default function Home() {
               <UnderwaterImaging image={gcs.uderwater_image} />
             </div>
           </div>
-          <Position track={track} lon={gcs.longitude} lat={gcs.lattitude} />
+          <Position track={track} lon={gcs.longitude} lat={gcs.latittude} initialX={initialX} initialY={initialY} initial={initial} />
         </div>
       </div>
     </div >

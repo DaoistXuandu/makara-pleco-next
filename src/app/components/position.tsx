@@ -5,43 +5,27 @@ export default function Position({ track, lon, lat }: { track: number, lon: numb
     const [location, setLocation] = useState(5)
     const length = 5;
 
-    const [x, setX] = useState(1)
-    const [y, setY] = useState(1)
-
-    function draw() {
-    }
-
-
     useEffect(() => {
-        // const interval = setInterval(() => {
-        //     draw()
-        // }, 1000)
-
-        let xx = 1, yy = 1
-        // const xy = setInterval(() => {
-        //     console.log(lon, lat)
-        //     const canvas = document.getElementById("myCanvas") as HTMLCanvasElement;
-        //     const ctx = canvas.getContext("2d");
-        //     if (ctx) {
-        //         ctx.beginPath();
-        //         ctx.arc(xx, yy, 4, 0, 2 * Math.PI);
-        //         ctx.fillStyle = "red";
-        //         ctx.strokeStyle = "red";
-        //         ctx.fill();
-        //         ctx.stroke();
-        //     }
-        //     xx += 10, yy += 10
-        // }, 100)
+        let xx = 395, yy = 395
+        const xy = setInterval(() => {
+            console.log(lon, lat)
+            const canvas = document.getElementById("myCanvas") as HTMLCanvasElement;
+            const ctx = canvas.getContext("2d");
+            if (ctx) {
+                ctx.beginPath();
+                ctx.arc(xx, yy, 4, 0, 2 * Math.PI);
+                ctx.fillStyle = "red";
+                ctx.strokeStyle = "red";
+                ctx.fill();
+                ctx.stroke();
+            }
+            // xx += 10, yy += 10
+        }, 100)
 
         return () => {
-            // clearInterval(interval)
-            // clearInterval(xy)
         }
     }, [])
 
-    useEffect(() => {
-        console.log("x", x)
-    }, [x])
 
     return (
         <div className="rewlative w-3/5 flex flex-col">
