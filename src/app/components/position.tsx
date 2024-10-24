@@ -1,25 +1,48 @@
 import { useEffect, useState } from "react"
 import Row from "./row";
+export default function Position({ track, lon, lat }: { track: string, lon: number, lat: number }) {
 
-export default function Position({ track, lon, lat }: { track: number, lon: number, lat: number }) {
-    const [location, setLocation] = useState(5)
-    const length = 5;
+    const X = 395
+    const Y = 395
+    const init = [-7.332025, 112.756995]
+    const initialLat = init[0]
+    const initialLon = init[1]
+
+    function getTranslation(data: number) {
+        return (data * 111111)
+    }
+
+    function getGcsTranslation() {
+        let translateLat = 0, translateLon = 0
+        translateLat = getTranslation(lat - initialLat)
+        translateLon = getTranslation(lon - initialLon)
+        translateLat = translateLat * Y / 25
+        translateLon = translateLon * X / 25
+
+        const data = {
+            y: translateLat,
+            x: translateLon
+        }
+
+        return data
+    }
 
     useEffect(() => {
-        let xx = 395, yy = 395
+        let init_data = (track == "A" ? [395, 395] : [5, 395])
+        let xx = init_data[0], yy = init_data[1]
         const xy = setInterval(() => {
-            console.log(lon, lat)
+            let current = getGcsTranslation()
             const canvas = document.getElementById("myCanvas") as HTMLCanvasElement;
             const ctx = canvas.getContext("2d");
             if (ctx) {
                 ctx.beginPath();
-                ctx.arc(xx, yy, 4, 0, 2 * Math.PI);
+                ctx.arc(xx + current.x, yy - current.y, 4, 0, 2 * Math.PI);
                 ctx.fillStyle = "red";
                 ctx.strokeStyle = "red";
                 ctx.fill();
                 ctx.stroke();
             }
-        }, 100)
+        }, 1000)
 
         return () => {
         }
@@ -28,7 +51,7 @@ export default function Position({ track, lon, lat }: { track: number, lon: numb
 
     return (
         <div className="rewlative w-3/5 flex flex-col">
-            <h1 className="font-bold text-xl">Track: {(track == 0 ? 'A' : 'B')}</h1>
+            <h1 className="font-bold text-xl">Track: {track}</h1>
             <div className="relative">
                 <canvas id="myCanvas" width={402} height={402} className="absolute">
                     Sorry, your browser does not support canvas.

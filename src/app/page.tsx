@@ -32,7 +32,6 @@ interface GCS {
 }
 
 export default function Home() {
-  const [track, setTrack] = useState(0)
   const [temp, setTemp] = useState("")
   const [initialX, setInitialX] = useState(0)
   const [initialY, setInitialY] = useState(0)
@@ -42,7 +41,7 @@ export default function Home() {
       cog: 0,
       sog: 0,
       longitude: 0,
-      latittude: 0,
+      latittude: 1,
       battery: 55,
       temprature: 30,
       surface_image: "",
@@ -66,12 +65,12 @@ export default function Home() {
   }
 
   useEffect(() => {
-    const intervalId = setInterval(() => {
-      getGcs()
-    }, 1000); // Runs every 1 second
+    // const intervalId = setInterval(() => {
+    //   getGcs()
+    // }, 1000); // Runs every 1 second
 
     // Cleanup on component unmount
-    return () => clearInterval(intervalId);
+    // return () => clearInterval(intervalId);
   }, [])
 
   return (
@@ -92,7 +91,8 @@ export default function Home() {
               <UnderwaterImaging image={gcs.uderwater_image} />
             </div>
           </div>
-          <Position track={track} lon={gcs.longitude} lat={gcs.latittude} />
+          {/* <Position /> */}
+          <Position track={gcs.track} lon={gcs.longitude} lat={gcs.latittude} />
         </div>
       </div>
     </div >
