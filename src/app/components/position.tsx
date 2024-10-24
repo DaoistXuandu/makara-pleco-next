@@ -19,7 +19,6 @@ export default function Position({ track, lon, lat }: { track: number, lon: numb
                 ctx.fill();
                 ctx.stroke();
             }
-            // xx += 10, yy += 10
         }, 100)
 
         return () => {
