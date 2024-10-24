@@ -25,6 +25,14 @@ export default function GeoTag({ sog, cog, lon, lat }: { sog: number, cog: numbe
         return xF(a.getDate()) + "/" + xF(a.getMonth()) + "/" + a.getFullYear();
     }
 
+    useEffect(() => {
+        const interval = setInterval(() => {
+            getTime()
+        }, 1000)
+
+        return () => clearInterval(interval)
+    }, [])
+
     return (
         <div className='flex flex-col space-y-1'>
             <h1 className='text-xl font-bold'>GeoTag Info</h1>
