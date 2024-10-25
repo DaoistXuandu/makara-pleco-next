@@ -1,4 +1,5 @@
 import { createClient } from '@supabase/supabase-js'
+import { stat } from 'fs'
 
 async function gcsGetAsc() {
     const supabase = await createClient(process.env.NEXT_PUBLIC_URL as string, process.env.NEXT_PUBLIC_KEY as string)
@@ -22,11 +23,8 @@ async function gcsGetDesc() {
     return data
 }
 
-
 async function gcsDelete() {
     const supabase = await createClient(process.env.NEXT_PUBLIC_URL as string, process.env.NEXT_PUBLIC_KEY as string)
-
-
     const response = await supabase
         .from('GCS')
         .delete()
@@ -34,5 +32,16 @@ async function gcsDelete() {
     return response
 }
 
+async function getImage(id: number) {
+    const supabase = await createClient(process.env.NEXT_PUBLIC_URL as string, process.env.NEXT_PUBLIC_KEY as string)
+    const { data, error } = await supabase
+        .from('Image')
+        .select()
+        .order('id', { ascending: (id == 1) })
+        .limit(1)
 
-export { gcsGetAsc, gcsDelete, gcsGetDesc }
+    return data
+}
+
+
+export { gcsGetAsc, gcsDelete, gcsGetDesc, getImage }

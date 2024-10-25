@@ -4,8 +4,7 @@ import Title from './components/title'
 import GeoTag from './components/geoTag';
 import GenInfo from './components/genInfo';
 import PositionLog from './components/positionLog';
-import SurfaceImaging from './components/surfaceImaging';
-import UnderwaterImaging from './components/underwaterImaging';
+import Image from './components/image';
 import Position from './components/position';
 import { useEffect, useState } from 'react';
 import { gcsDelete, gcsGetAsc, gcsGetDesc } from '@/lib/data';
@@ -23,9 +22,6 @@ interface GCS {
   battery: number
   temprature: number
 
-  surface_image: string
-  uderwater_image: string
-
   mission: number
 
   track: string
@@ -41,8 +37,6 @@ export default function Home() {
       latittude: 1,
       battery: 55,
       temprature: 30,
-      surface_image: "",
-      uderwater_image: "",
       mission: 0,
       track: "A"
     }
@@ -55,13 +49,10 @@ export default function Home() {
       latittude: 1,
       battery: 55,
       temprature: 30,
-      surface_image: "",
-      uderwater_image: "",
       mission: 0,
       track: "A"
     }
   )
-
 
 
   async function getGcs() {
@@ -102,15 +93,15 @@ export default function Home() {
         <div className='flex flex-col w-1/2 space-y-4'>
           <div className='flex flex-row'>
             <div className='w-1/2'>
-              <SurfaceImaging image={gcs.surface_image} />
+              <Image image={1} />
             </div>
             <div className='w-1/2'>
-              <UnderwaterImaging image={gcs.uderwater_image} />
+              <Image image={2} />
             </div>
           </div>
           {/* <Position /> */}
 
-          <Position track={"A"} lon={gcs.longitude} lat={gcs.latittude} initial_lat={gcsInit.latittude} initial_lon={gcsInit.longitude} />
+          <Position track={gcs.track} lon={gcs.longitude} lat={gcs.latittude} initial_lat={gcsInit.latittude} initial_lon={gcsInit.longitude} />
         </div>
       </div>
     </div >
