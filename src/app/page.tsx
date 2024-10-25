@@ -6,10 +6,8 @@ import GenInfo from './components/genInfo';
 import PositionLog from './components/positionLog';
 import Image from './components/image';
 import Position from './components/position';
-import { useEffect, useState } from 'react';
-import { gcsDelete, gcsGetAsc, gcsGetDesc } from '@/lib/data';
-import { getDefaultConfig } from 'tailwind-merge';
-import { init } from 'next/dist/compiled/webpack/webpack';
+import { use, useEffect, useState } from 'react';
+import { gcsDelete, gcsGetDesc, initialGet } from '@/lib/data';
 const noto_sans = Noto_Sans({ subsets: ['latin'] })
 
 interface GCS {
@@ -27,8 +25,12 @@ interface GCS {
   track: string
 }
 
+interface Initial {
+  longitude: number
+  latittude: number
+}
+
 export default function Home() {
-  const [initial, setInitial] = useState(false)
   const [gcs, setGcs] = useState<GCS>(
     {
       cog: 0,
@@ -38,30 +40,25 @@ export default function Home() {
       battery: 55,
       temprature: 30,
       mission: 0,
-      track: "A"
+      track: ""
     }
   )
-  const [gcsInit, setGcsInit] = useState<GCS>(
+  const [gcsInit, setGcsInit] = useState<Initial>(
     {
-      cog: 0,
-      sog: 0,
-      longitude: 0,
-      latittude: 1,
-      battery: 55,
-      temprature: 30,
-      mission: 0,
-      track: "A"
+      longitude: -1,
+      latittude: 1
     }
   )
 
 
   async function getGcs() {
     const data = await gcsGetDesc()
-    const dataInit = await gcsGetAsc()
+    const dataInit = await initialGet()
 
     if (data && data[0]) {
       setGcs(data[0])
     }
+
     if (dataInit && dataInit[0]) {
       setGcsInit(dataInit[0])
     }
@@ -83,7 +80,6 @@ export default function Home() {
   return (
     <div className={`flex text-black flex-col space-y-5 pt-10 pb-20 px-12 bg-white h-screen min-h-fit ${noto_sans.className}`}>
       <Title />
-      <button onClick={reset}>Reset</button>
       <div className='flex flex-row'>
         <div className='flex flex-col w-1/2 space-y-3'>
           <GeoTag cog={gcs.cog} sog={gcs.sog} lon={gcs.longitude} lat={gcs.latittude} />

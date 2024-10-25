@@ -27,6 +27,16 @@ export default function Image({ image }: { image: number }) {
         }
     }
 
+    function xF(data: number) {
+        return `${(data < 10 ? "0" : "")}${data}`
+    }
+    function getInfoTIme(time: Date) {
+        return `${xF(time.getHours())}:${xF(time.getMinutes())}:${xF(time.getSeconds())}`
+    }
+    // useEffect(() => {
+    //     console.log(mission.image.length, mission.image)
+    // }, [mission])
+
     useEffect(() => {
         const interval = setInterval(() => {
             getData()
@@ -38,10 +48,10 @@ export default function Image({ image }: { image: number }) {
     return (
         <div>
             <p className="font-bold text-xl">Mission {image == 1 ? "Surface" : "Underwater"} Imaging</p>
-            {mission.image != "" ? (
+            {mission.image.length != 0 ? (
                 <div>
                     <img src={`data:image/png;base64,${mission.image}`} alt="" />
-                    <p>Time: {mission.created_at ? new Date(mission.created_at).toLocaleDateString() : ""}</p>
+                    <p>Time: {mission.created_at ? getInfoTIme(new Date(mission.created_at)) : ""}</p>
                     <p>Coordinate: [{mission.latittude}, {mission.longitude}]</p>
                 </div>
             ) : (

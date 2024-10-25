@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react"
 import Row from "./row";
-import { gcsGetAsc } from "@/lib/data";
 export default function Position({ track, lon, lat, initial_lon, initial_lat }: { track: string, lon: number, lat: number, initial_lon: number, initial_lat: number }) {
     const X = 395
     const Y = 395
@@ -20,7 +19,7 @@ export default function Position({ track, lon, lat, initial_lon, initial_lat }: 
             y: translateLat,
             x: translateLon
         }
-
+        // console.log(lon, lat, initial_lat, initial_lon, data)
         return data
     }
 
@@ -33,9 +32,10 @@ export default function Position({ track, lon, lat, initial_lon, initial_lat }: 
             const canvas = document.getElementById("myCanvas") as HTMLCanvasElement;
             const ctx = canvas.getContext("2d");
 
-            if (ctx) {
+            if (ctx && (track == "A" || track == "B")) {
                 ctx.beginPath();
                 ctx.arc(xx + current.x, yy - current.y, 4, 0, 2 * Math.PI);
+                // console.log("Current", xx + current.x, yy - current.y)
                 ctx.fillStyle = "red";
                 ctx.strokeStyle = "red";
                 ctx.fill();
