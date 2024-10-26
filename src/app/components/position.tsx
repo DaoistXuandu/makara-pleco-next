@@ -26,7 +26,7 @@ export default function Position({ track, lon, lat, initial_lon, initial_lat }: 
     useEffect(() => {
         let init_data = (track == "A" ? [395, 395] : [5, 395])
         let xx = init_data[0], yy = init_data[1]
-        console.log(initial_lat, initial_lon)
+        // console.log("Initial", initial_lat, initial_lon)
 
         const canvas = document.getElementById("myCanvas") as HTMLCanvasElement;
         const ctx = canvas.getContext("2d");
