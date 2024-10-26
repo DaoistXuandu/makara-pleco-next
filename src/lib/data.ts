@@ -28,6 +28,7 @@ async function gcsDelete() {
         .from('GCS')
         .delete()
         .in('track', ["A1", "E0", "A", "B", null])
+
     return response
 }
 

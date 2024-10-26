@@ -26,18 +26,59 @@ export default function Position({ track, lon, lat, initial_lon, initial_lat }: 
     useEffect(() => {
         let init_data = (track == "A" ? [395, 395] : [5, 395])
         let xx = init_data[0], yy = init_data[1]
+        console.log(initial_lat, initial_lon)
+
+        const canvas = document.getElementById("myCanvas") as HTMLCanvasElement;
+        const ctx = canvas.getContext("2d");
+        const size = 401 / 5
+        let line = 0
+        let statusAA = ["5", "4", "3", "2", "1"], statusAB = ["1", "2", "3", "4", "5"]
+        let statusBA = ["E", "D", "C", "B", "A"], statusBB = ["A", "B", "C", "D", "E"]
+        if (ctx) {
+            for (let i = 0; i < 6; i++) {
+                ctx.beginPath();
+                ctx.moveTo(0, line);
+                ctx.lineTo(401, line);
+                ctx.stroke()
+
+                ctx.font = "12px";
+                if (i < 5) {
+                    if (track == "A")
+                        ctx.strokeText(statusAA[i], 10, line + 20);
+                    else if (track == "B")
+                        ctx.strokeText(statusAB[i], 380, line + 20);
+                }
+
+
+                ctx.beginPath();
+                ctx.moveTo(line, 0);
+                ctx.lineTo(line, 401);
+                ctx.stroke()
+
+                ctx.font = "12px";
+                if (i < 5) {
+                    if (track == "A")
+                        ctx.strokeText(statusBA[i], line + size - 20, 20);
+                    else if (track == "B")
+                        ctx.strokeText(statusBB[i], line + 20, 20);
+                }
+
+
+                ctx.strokeStyle = "black";
+                line += size
+            }
+        }
+
         const xy = setInterval(() => {
 
             let current = getGcsTranslation()
-            const canvas = document.getElementById("myCanvas") as HTMLCanvasElement;
-            const ctx = canvas.getContext("2d");
 
             if (ctx && (track == "A" || track == "B")) {
                 ctx.beginPath();
                 ctx.arc(xx + current.x, yy - current.y, 4, 0, 2 * Math.PI);
                 // console.log("Current", xx + current.x, yy - current.y)
                 ctx.fillStyle = "red";
-                ctx.strokeStyle = "red";
+                // ctx.strokeStyle = "red";
                 ctx.fill();
                 ctx.stroke();
             }
@@ -48,17 +89,17 @@ export default function Position({ track, lon, lat, initial_lon, initial_lat }: 
 
 
     return (
-        <div className="rewlative w-3/5 flex flex-col">
+        <div className="rewlative w-full flex flex-col">
             <h1 className="font-bold text-xl">Track: {track}</h1>
             <div className="relative">
                 <canvas id="myCanvas" width={402} height={402} className="absolute">
                     Sorry, your browser does not support canvas.
                 </canvas>
-                <Row row={1} />
+                {/* <Row row={1} />
                 <Row row={2} />
                 <Row row={3} />
                 <Row row={4} />
-                <Row row={5} />
+                <Row row={5} /> */}
             </div>
         </div>
     )
