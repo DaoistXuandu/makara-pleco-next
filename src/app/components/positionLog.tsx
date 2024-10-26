@@ -3,12 +3,17 @@ import { useState } from "react"
 export default function PositionLog({ status }: { status: number }) {
 
     const mission = [
-        "Preparation",
-        "Start",
-        "Floating Ball Set",
-        "Mission Surface Imaging",
-        "Mission Underwater Imaging",
-        "Finish"
+        "Find Buoy Step One",
+        "Track One",
+        "Find Buoy Step Two",
+        "Track Two",
+        "Find Buoy Step Three",
+        "Track Three",
+        "Find Green Box",
+        "Capture Green Box",
+        "Find Blue Box",
+        "Capture Blue Box",
+        "Docking"
     ]
 
     const mission_status = [
