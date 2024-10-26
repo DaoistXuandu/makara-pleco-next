@@ -7,7 +7,7 @@ import PositionLog from './components/positionLog';
 import Image from './components/image';
 import Position from './components/position';
 import { use, useEffect, useState } from 'react';
-import { gcsDelete, gcsGetDesc, initialGet } from '@/lib/data';
+import { gcsDelete, gcsGetDesc, gcsGetDescPrev, initialGet } from '@/lib/data';
 const noto_sans = Noto_Sans({ subsets: ['latin'] })
 
 interface GCS {
@@ -50,10 +50,18 @@ export default function Home() {
     }
   )
 
+  const [prevInit, setPrevInit] = useState<Initial>(
+    {
+      longitude: -1,
+      latittude: 1
+    }
+  )
+
 
   async function getGcs() {
     const data = await gcsGetDesc()
     const dataInit = await initialGet()
+    const prevInit = await gcsGetDescPrev()
 
     if (data && data[0]) {
       setGcs(data[0])
@@ -61,6 +69,10 @@ export default function Home() {
 
     if (dataInit && dataInit[0]) {
       setGcsInit(dataInit[0])
+    }
+
+    if (prevInit && prevInit[1]) {
+      setPrevInit(prevInit[1])
     }
   }
 
@@ -97,7 +109,7 @@ export default function Home() {
           </div>
           {/* <Position /> */}
 
-          <Position track={gcs.track} lon={gcs.longitude} lat={gcs.latittude} initial_lat={gcsInit.latittude} initial_lon={gcsInit.longitude} />
+          <Position track={gcs.track} lon={gcs.longitude} lat={gcs.latittude} initial_lat={gcsInit.latittude} initial_lon={gcsInit.longitude} prev_lon={prevInit.longitude} prev_lat={prevInit.latittude} />
         </div>
       </div>
     </div >

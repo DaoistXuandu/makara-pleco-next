@@ -22,6 +22,18 @@ async function gcsGetDesc() {
     return data
 }
 
+
+async function gcsGetDescPrev() {
+    const supabase = await createClient(process.env.NEXT_PUBLIC_URL as string, process.env.NEXT_PUBLIC_KEY as string)
+    const { data, error } = await supabase
+        .from('GCS')
+        .select()
+        .order('id', { ascending: false })
+        .limit(2)
+
+    return data
+}
+
 async function gcsDelete() {
     const supabase = await createClient(process.env.NEXT_PUBLIC_URL as string, process.env.NEXT_PUBLIC_KEY as string)
     const response = await supabase
@@ -44,4 +56,4 @@ async function getImage(id: number) {
 }
 
 
-export { initialGet, gcsDelete, gcsGetDesc, getImage }
+export { initialGet, gcsDelete, gcsGetDesc, getImage, gcsGetDescPrev }

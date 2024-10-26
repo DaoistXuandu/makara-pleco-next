@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import Row from "./row";
-export default function Position({ track, lon, lat, initial_lon, initial_lat }: { track: string, lon: number, lat: number, initial_lon: number, initial_lat: number }) {
+export default function Position({ track, lon, lat, initial_lon, initial_lat, prev_lon, prev_lat }: { track: string, lon: number, lat: number, initial_lon: number, initial_lat: number, prev_lon: number, prev_lat: number }) {
     const X = 395
     const Y = 395
 
@@ -12,6 +12,21 @@ export default function Position({ track, lon, lat, initial_lon, initial_lat }: 
         let translateLat = 0, translateLon = 0
         translateLat = getTranslation(lat - initial_lat)
         translateLon = getTranslation(lon - initial_lon)
+        translateLat = translateLat * Y / 25
+        translateLon = translateLon * X / 25
+
+        const data = {
+            y: translateLat,
+            x: translateLon
+        }
+        // console.log(lon, lat, initial_lat, initial_lon, data)
+        return data
+    }
+
+    function getGcsTranslationRelative() {
+        let translateLat = 0, translateLon = 0
+        translateLat = getTranslation(prev_lat - initial_lat)
+        translateLon = getTranslation(prev_lon - initial_lon)
         translateLat = translateLat * Y / 25
         translateLon = translateLon * X / 25
 
@@ -35,6 +50,7 @@ export default function Position({ track, lon, lat, initial_lon, initial_lat }: 
         let statusAA = ["5", "4", "3", "2", "1"], statusAB = ["1", "2", "3", "4", "5"]
         let statusBA = ["E", "D", "C", "B", "A"], statusBB = ["A", "B", "C", "D", "E"]
         if (ctx) {
+            ctx.strokeStyle = "black";
             for (let i = 0; i < 6; i++) {
                 ctx.beginPath();
                 ctx.moveTo(0, line);
@@ -64,23 +80,36 @@ export default function Position({ track, lon, lat, initial_lon, initial_lat }: 
                 }
 
 
-                ctx.strokeStyle = "black";
                 line += size
             }
         }
 
         const xy = setInterval(() => {
-
             let current = getGcsTranslation()
-
+            let prev = getGcsTranslationRelative()
+            // console.log(current)
             if (ctx && (track == "A" || track == "B")) {
                 ctx.beginPath();
-                ctx.arc(xx + current.x, yy - current.y, 4, 0, 2 * Math.PI);
-                // console.log("Current", xx + current.x, yy - current.y)
+                let currentX = xx + current.x
+                let currentY = yy - current.y
+
+                let prevX = xx + prev.x
+                let prevY = yy - prev.y
+
+                ctx.arc(currentX, currentY, 4, 0, 2 * Math.PI);
                 ctx.fillStyle = "red";
                 // ctx.strokeStyle = "red";
                 ctx.fill();
                 ctx.stroke();
+                if (prev_lat < 0) {
+                    ctx.beginPath();
+                    ctx.moveTo(currentX, currentY);
+                    ctx.lineTo(prevX, prevY);
+                    ctx.strokeStyle = "red";
+                    ctx.stroke()
+                    // console.log("Current", xx + current.x, yy - current.y)
+                }
+
             }
         }, 1000)
 
