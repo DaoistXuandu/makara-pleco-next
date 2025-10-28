@@ -1,5 +1,7 @@
+"use client"
+
 import { useEffect, useState } from "react"
-import Row from "./row";
+
 export default function Position({ track, lon, lat, initial_lon, initial_lat, prev_lon, prev_lat }: { track: string, lon: number, lat: number, initial_lon: number, initial_lat: number, prev_lon: number, prev_lat: number }) {
     const X = 395
     const Y = 395
@@ -38,7 +40,7 @@ export default function Position({ track, lon, lat, initial_lon, initial_lat, pr
         return data
     }
 
-    useEffect(() => {
+    useEffect(() => {           
         let init_data = (track == "A" ? [395, 395] : [5, 395])
         let xx = init_data[0], yy = init_data[1]
         // console.log("Initial", initial_lat, initial_lon)
@@ -111,7 +113,7 @@ export default function Position({ track, lon, lat, initial_lon, initial_lat, pr
                 }
 
             }
-        }, 1000)
+        }, 100)
 
         return () => { clearInterval(xy) }
     }, [lat, lon, initial_lat, initial_lon])

@@ -13,7 +13,7 @@ export function connectWebSocket(url = "ws://localhost:8000") {
     socket.onmessage = (event) => {
         try {
             const message = JSON.parse(event.data);
-            console.log(message)
+            // console.log(message)
             listeners.forEach((cb) => cb(message));
         } catch (err) {
             console.error("Invalid WebSocket data:", event.data);

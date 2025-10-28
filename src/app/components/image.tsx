@@ -1,5 +1,4 @@
 // import { getImage } from "@/lib/data";
-import { disconnect } from "process";
 import { useEffect, useState } from "react";
 
 
