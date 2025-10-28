@@ -1,4 +1,4 @@
-import { getImage } from "@/lib/data";
+// import { getImage } from "@/lib/data";
 import { disconnect } from "process";
 import { useEffect, useState } from "react";
 
@@ -21,10 +21,10 @@ export default function Image({ image }: { image: number }) {
     })
 
     async function getData() {
-        const data = await getImage(image)
-        if (data && data[0]) {
-            setMission(data[0])
-        }
+        // const data = await getImage(image)
+        // if (data && data[0]) {
+        //     setMission(data[0])
+        // }
     }
 
     function xF(data: number) {
@@ -39,7 +39,7 @@ export default function Image({ image }: { image: number }) {
 
     useEffect(() => {
         const interval = setInterval(() => {
-            getData()
+            // getData()
         }, 1000)
 
         return () => clearInterval(interval)

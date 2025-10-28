@@ -1,59 +1,29 @@
-import { createClient } from '@supabase/supabase-js'
-import { stat } from 'fs'
 
-async function initialGet() {
-    const supabase = await createClient(process.env.NEXT_PUBLIC_URL as string, process.env.NEXT_PUBLIC_KEY as string)
-    const { data, error } = await supabase
-        .from('Initial')
-        .select()
-        .eq("id", 1)
+async function getCurrentPosition() {
 
-    return data
+    return ""
 }
 
-async function gcsGetDesc() {
-    const supabase = await createClient(process.env.NEXT_PUBLIC_URL as string, process.env.NEXT_PUBLIC_KEY as string)
-    const { data, error } = await supabase
-        .from('GCS')
-        .select()
-        .order('id', { ascending: false })
-        .limit(1)
+async function getTelemetryData() {
 
-    return data
+    return ""
 }
 
 
-async function gcsGetDescPrev() {
-    const supabase = await createClient(process.env.NEXT_PUBLIC_URL as string, process.env.NEXT_PUBLIC_KEY as string)
-    const { data, error } = await supabase
-        .from('GCS')
-        .select()
-        .order('id', { ascending: false })
-        .limit(2)
+async function getPreviousPosition() {
 
-    return data
+    return ""
 }
 
-async function gcsDelete() {
-    const supabase = await createClient(process.env.NEXT_PUBLIC_URL as string, process.env.NEXT_PUBLIC_KEY as string)
-    const response = await supabase
-        .from('GCS')
-        .delete()
-        .in('track', ["A1", "E0", "A", "B", null])
+async function getSurfaceImage(id: number) {
 
-    return response
+    return ""
 }
 
-async function getImage(id: number) {
-    const supabase = await createClient(process.env.NEXT_PUBLIC_URL as string, process.env.NEXT_PUBLIC_KEY as string)
-    const { data, error } = await supabase
-        .from('Image')
-        .select()
-        .order('id', { ascending: (id == 1) })
-        .limit(1)
+async function getUnderwaterImage(id: number) {
 
-    return data
+    return ""
 }
 
 
-export { initialGet, gcsDelete, gcsGetDesc, getImage, gcsGetDescPrev }
+export { getTelemetryData, getCurrentPosition, getPreviousPosition, getSurfaceImage, getUnderwaterImage }
