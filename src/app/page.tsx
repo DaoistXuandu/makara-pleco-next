@@ -12,27 +12,27 @@ const noto_sans = Noto_Sans({ subsets: ['latin'] })
 
 export default function Home() {
   const {
-    image, 
-    sog, 
-    cog, 
-    lat, 
-    lon, 
-    greenBox, 
-    blueBox, 
-    mission, 
-    track, 
-    initLat, 
+    image,
+    sog,
+    cog,
+    lat,
+    lon,
+    greenBox,
+    blueBox,
+    mission,
+    track,
+    initLat,
     initLon,
     prevLat,
     prevLon,
   } = useTelemetry()
-  
+
   return (
     <div className={`flex text-black flex-col space-y-5 pt-10 pb-20 px-12 bg-white h-screen min-h-fit ${noto_sans.className}`}>
       <Title />
       <div className='flex flex-row'>
         <div className='flex flex-col w-1/2 space-y-3'>
-          <GeoTag cog={cog} sog={sog} lon={lon} lat={lat} />
+          <GeoTag cog={cog} sog={sog} lon={parseFloat(lon)} lat={parseFloat(lat)} />
           <GenInfo battery={55} temprature={30} />
           <PositionLog status={mission} />
         </div>
@@ -46,13 +46,13 @@ export default function Home() {
             </div>
           </div>
 
-          <Position 
-            track={track} 
-            lon={lon} 
-            lat={lat} 
-            initial_lat={initLat} 
-            initial_lon={initLon} 
-            prev_lon={prevLon} 
+          <Position
+            track={track}
+            lon={parseFloat(lon)}
+            lat={parseFloat(lat)}
+            initial_lat={initLat}
+            initial_lon={initLon}
+            prev_lon={prevLon}
             prev_lat={prevLat} />
         </div>
       </div>
